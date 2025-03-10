@@ -20,6 +20,7 @@ export interface Config {
     forms: Form;
     'form-submissions': FormSubmission;
     search: Search;
+    'mux-video': MuxVideo;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -36,6 +37,7 @@ export interface Config {
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
+    'mux-video': MuxVideoSelect<false> | MuxVideoSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -745,6 +747,38 @@ export interface Search {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mux-video".
+ */
+export interface MuxVideo {
+  id: string;
+  /**
+   * A unique title for this video that will help you identify it later.
+   */
+  title: string;
+  assetId?: string | null;
+  duration?: number | null;
+  /**
+   * Pick a timestamp (in seconds) from the video to be used as the poster image. When unset, defaults to the middle of the video.
+   */
+  posterTimestamp?: number | null;
+  aspectRatio?: string | null;
+  maxWidth?: number | null;
+  maxHeight?: number | null;
+  playbackOptions?:
+    | {
+        playbackId?: string | null;
+        playbackPolicy?: ('signed' | 'public') | null;
+        playbackUrl?: string | null;
+        posterUrl?: string | null;
+        gifUrl?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-jobs".
  */
 export interface PayloadJob {
@@ -877,6 +911,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'search';
         value: string | Search;
+      } | null)
+    | ({
+        relationTo: 'mux-video';
+        value: string | MuxVideo;
       } | null)
     | ({
         relationTo: 'payload-jobs';
@@ -1405,6 +1443,31 @@ export interface SearchSelect<T extends boolean = true> {
         relationTo?: T;
         id?: T;
         title?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mux-video_select".
+ */
+export interface MuxVideoSelect<T extends boolean = true> {
+  title?: T;
+  assetId?: T;
+  duration?: T;
+  posterTimestamp?: T;
+  aspectRatio?: T;
+  maxWidth?: T;
+  maxHeight?: T;
+  playbackOptions?:
+    | T
+    | {
+        playbackId?: T;
+        playbackPolicy?: T;
+        playbackUrl?: T;
+        posterUrl?: T;
+        gifUrl?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
