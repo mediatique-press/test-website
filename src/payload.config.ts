@@ -76,7 +76,7 @@ export default buildConfig({
       initSettings: {
         tokenId: process.env.MUX_TOKEN_ID || '',
         tokenSecret: process.env.MUX_TOKEN_SECRET || '',
-        // webhookSecret: process.env.MUX_WEBHOOK_SIGNING_SECRET || '',
+        webhookSecret: process.env.MUX_WEBHOOK_SIGNING_SECRET || '',
       },
       uploadSettings: {
         cors_origin: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
